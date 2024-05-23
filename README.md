@@ -4,6 +4,10 @@ This example demonstrates creating a full-text RSS feed using Astro’s [experim
 
 See [`src/pages/rss.xml.ts`](./src/pages/rss.xml.ts) for the code rendering full content, including MDX, to an RSS feed.
 
+Hosted demo:
+- [Blog](https://astro-blog-full-text-rss.vercel.app/blog)
+- [RSS feed](https://astro-blog-full-text-rss.vercel.app/rss.xml)
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
