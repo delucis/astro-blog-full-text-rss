@@ -1,0 +1,8 @@
+---
+import { type CollectionEntry, getEntry } from 'astro:content'
+
+const entry = await getEntry('blog', Astro.params.slug!)
+const { Content } = await entry!.render()
+---
+
+<Content/>
