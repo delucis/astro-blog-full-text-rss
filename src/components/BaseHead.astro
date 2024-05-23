@@ -1,6 +1,7 @@
 ---
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
+import { SITE_TITLE } from '../consts';
 import '../styles/global.css';
 
 interface Props {
@@ -45,3 +46,11 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- Enable RSS feed auto-discovery -->
+<link
+    rel="alternate"
+    type="application/rss+xml"
+    title={SITE_TITLE}
+    href={new URL('rss.xml', Astro.site)}
+/>
