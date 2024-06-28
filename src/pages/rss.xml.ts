@@ -7,7 +7,6 @@ import { getCollection } from "astro:content";
 import { transform, walk } from "ultrahtml";
 import sanitize from "ultrahtml/transformers/sanitize";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import Renderer from "./_rss/ContentRenderer.astro";
 
 export async function GET(context: APIContext) {
   // Get the URL to prepend to relative site links. Based on `site` in `astro.config.mjs`.
@@ -29,11 +28,11 @@ export async function GET(context: APIContext) {
 
   // Loop over blog posts to create feed items for each, including full content.
   const feedItems: RSSFeedItem[] = [];
-  for (const { data, slug, collection } of posts) {
+  for (const post of posts) {
+    // Get the `<Content/>` component for the current post.
+    const { Content } = await post.render();
     // Use the Astro container to render the content to a string.
-    const rawContent = await container.renderToString(Renderer, {
-      params: { collection, slug },
-    });
+    const rawContent = await container.renderToString(Content);
     // Process and sanitize the raw content:
     // - Makes link `href` and image `src` attributes absolute instead of relative
     // - Strips any `<script>` and `<style>` tags
@@ -52,7 +51,7 @@ export async function GET(context: APIContext) {
       },
       sanitize({ dropElements: ["script", "style"] }),
     ]);
-    feedItems.push({ ...data, link: `/blog/${slug}/`, content });
+    feedItems.push({ ...post.data, link: `/blog/${post.slug}/`, content });
   }
 
   // Return our RSS feed XML response.
