@@ -34,10 +34,11 @@ export async function GET(context: APIContext) {
     // Use the Astro container to render the content to a string.
     const rawContent = await container.renderToString(Content);
     // Process and sanitize the raw content:
+    // - Removes `<!DOCTYPE html>` preamble
     // - Makes link `href` and image `src` attributes absolute instead of relative
     // - Strips any `<script>` and `<style>` tags
     // Thanks @Princesseuh — https://github.com/Princesseuh/erika.florist/blob/1827288c14681490fa301400bfd815acb53463e9/src/middleware.ts
-    const content = await transform(rawContent, [
+    const content = await transform(rawContent.replace(/^<!DOCTYPE html>/, ''), [
       async (node) => {
         await walk(node, (node) => {
           if (node.name === "a" && node.attributes.href?.startsWith("/")) {
