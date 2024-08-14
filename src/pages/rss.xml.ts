@@ -1,4 +1,5 @@
 import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx";
+import { getContainerRenderer as reactContainerRenderer } from "@astrojs/react";
 import rss, { type RSSFeedItem } from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
@@ -14,7 +15,7 @@ export async function GET(context: APIContext) {
   if (baseUrl.at(-1) === "/") baseUrl = baseUrl.slice(0, -1);
 
   // Load MDX renderer. Other renderers for UI frameworks (e.g. React, Vue, etc.) would need adding here if you were using those.
-  const renderers = await loadRenderers([getMDXRenderer()]);
+  const renderers = await loadRenderers([reactContainerRenderer(),getMDXRenderer()]);
 
   // Create a new Astro container that we can render components with.
   // See https://docs.astro.build/en/reference/container-reference/
