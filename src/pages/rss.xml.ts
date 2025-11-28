@@ -3,7 +3,7 @@ import rss, { type RSSFeedItem } from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { loadRenderers } from "astro:container";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import { transform, walk } from "ultrahtml";
 import sanitize from "ultrahtml/transformers/sanitize";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
@@ -30,7 +30,7 @@ export async function GET(context: APIContext) {
   const feedItems: RSSFeedItem[] = [];
   for (const post of posts) {
     // Get the `<Content/>` component for the current post.
-    const { Content } = await post.render();
+    const { Content } = await render(post);
     // Use the Astro container to render the content to a string.
     const rawContent = await container.renderToString(Content);
     // Process and sanitize the raw content:
