@@ -14,7 +14,7 @@
     "@astrojs/mdx": "^8.1.2",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.4.4",
+    "astro": "^7.4.12",
     "ultrahtml": "^1.5.3"
   }
 }
